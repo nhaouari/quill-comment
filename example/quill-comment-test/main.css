@@ -1,0 +1,29 @@
+.comments {
+    padding: 10px;
+}
+
+.comment-box {
+    border: 1px #F0F0F0 solid;
+    padding: 10px 15px;
+}
+
+.comment-initials {
+    float: left;
+    padding: 10px;
+    background: #444444;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.comment-author {
+    color: #444444;
+    font-size: 18px;
+}
+
+.comment-date {
+    color: #BBBBBB;
+}
+
+.comment-body {
+    padding: 10px 0;
+}

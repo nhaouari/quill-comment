@@ -1,0 +1,20 @@
+{
+  "name": "quill-comment",
+  "version": "1.0.0",
+  "description": "Comment plugin for Quill editor",
+  "main": "quill.comment.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Win Min Tun <sawrochelais@gmail.com>",
+  "license": "MIT",
+  "keywords": ["quill", "quilljs", "comment", "quill editor"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/winmintun/quill-comment"
+  },
+  "dependencies": {
+    "quill": "^1.1.0",
+	  "quill-delta": "^3.2.0"
+  }
+}

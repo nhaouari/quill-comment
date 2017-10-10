@@ -1,0 +1,17 @@
+﻿button.ql-comments-toggle:after {
+  content: "COMMENTS";
+}
+
+button.ql-comments-toggle {
+  width: 70px!important;
+  font-size: 11px;
+}
+
+button.ql-comments-add:after {
+  content: "ADD COMMENT";
+}
+
+button.ql-comments-add {
+  width: 100px!important;
+  font-size: 11px;
+}
