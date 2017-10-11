@@ -83,14 +83,14 @@ class Comment {
 
         commentAddClick(addComment);
 
-        quill.formatText(range.index, range.length, 'commentClass', 'comment');
+        quill.formatText(range.index, range.length, 'commentClass', 'comment', 'user');
         //quill.formatText(range.index, range.length, 'comment', 'my stupid comment');
-        quill.formatText(range.index, range.length, 'commentAuthor', this.options.commentAuthorId);
+        quill.formatText(range.index, range.length, 'commentAuthor', this.options.commentAuthorId, 'user');
         
         this.options.commentTimestamp().then(utcSeconds => {
           // UNIX epoch like 1234567890
-          quill.formatText(range.index, range.length, 'commentTimestamp', utcSeconds);
-          quill.formatText(range.index, range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds);
+          quill.formatText(range.index, range.length, 'commentTimestamp', utcSeconds, 'user');
+          quill.formatText(range.index, range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds, 'user');
         })
         
       })
@@ -101,7 +101,7 @@ class Comment {
 
   addComment(comment) {
     // selection could be removed when this callback gets called, so store as global range
-    quill.formatText(range.index, range.length, 'comment', comment);
+    quill.formatText(range.index, range.length, 'comment', comment, 'user');
   }
 
   enable(enabled = true) {

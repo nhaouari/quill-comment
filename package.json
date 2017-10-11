@@ -1,6 +1,6 @@
 {
   "name": "quill-comment",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Comment plugin for Quill editor",
   "main": "quill.comment.js",
   "scripts": {
