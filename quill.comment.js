@@ -5,10 +5,6 @@ var Quill = require('quill');
 var Parchment = Quill.import('parchment');
 var Delta = require('quill-delta');
 
-let CommentClass = new Parchment.Attributor.Class('commentClass', 'ql', {
-  scope: Parchment.Scope.INLINE
-});
-
 let CommentAttr = new Parchment.Attributor.Attribute('comment', 'ql-comment', {
   scope: Parchment.Scope.INLINE
 });
@@ -40,7 +36,6 @@ class Comment {
     }
 
     Quill.register(CommentId, true);
-    Quill.register(CommentClass, true);
     Quill.register(CommentAttr, true);
     Quill.register(CommentAuthorAttr, true);
     Quill.register(CommentTimestampAttr, true);
@@ -83,8 +78,6 @@ class Comment {
 
         commentAddClick(addComment);
 
-        quill.formatText(range.index, range.length, 'commentClass', 'comment', 'user');
-        //quill.formatText(range.index, range.length, 'comment', 'my stupid comment');
         quill.formatText(range.index, range.length, 'commentAuthor', this.options.commentAuthorId, 'user');
         
         this.options.commentTimestamp().then(utcSeconds => {
