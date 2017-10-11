@@ -21,7 +21,7 @@ let CommentTimestampAttr = new Parchment.Attributor.Attribute('commentTimestamp'
   scope: Parchment.Scope.INLINE
 });
 
-let CommentId = new Parchment.Attributor.Attribute('id', 'id', {
+let CommentId = new Parchment.Attributor.Attribute('commentId', 'id', {
   scope: Parchment.Scope.INLINE
 });
 
@@ -90,7 +90,7 @@ class Comment {
         this.options.commentTimestamp().then(utcSeconds => {
           // UNIX epoch like 1234567890
           quill.formatText(range.index, range.length, 'commentTimestamp', utcSeconds);
-          quill.formatText(range.index, range.length, 'id', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds);
+          quill.formatText(range.index, range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds);
         })
         
       })
