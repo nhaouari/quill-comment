@@ -26,7 +26,8 @@ let options = {
 		// comment setting
 		comment: {
 			enabled: true,
-            commentAuthorId: 123,
+			commentAuthorId: 123,
+			commentAddOn: 'Author Name', // any additional info needed
 			color: 'yellow', // comment background color in the text
 			commentAddClick: commentAddClick, // get called when `ADD COMMENT` btn on options bar is clicked
 			commentsClick: commentsClick, // get called when you click `COMMENTS` btn on options bar for you to do additional things beside color on/off. Color on/off is already done before the callback is called.

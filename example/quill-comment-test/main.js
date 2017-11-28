@@ -44,7 +44,8 @@ function initializeQuill() {
 			// authorship id and color setting
 			comment: {
 				enabled: true,
-                commentAuthorId: 123,
+        commentAuthorId: 123,
+        commentAddOn: 'Author Name',
 				color: 'yellow',
 				commentAddClick: commentAddClick,
 				commentsClick: commentsClick,

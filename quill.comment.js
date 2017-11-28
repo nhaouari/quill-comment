@@ -21,6 +21,10 @@ let CommentId = new Parchment.Attributor.Attribute('commentId', 'id', {
   scope: Parchment.Scope.INLINE
 });
 
+let CommentAddOnAttr = new Parchment.Attributor.Attribute('commentAddOn', 'ql-comment-addon', {
+  scope: Parchment.Scope.INLINE
+});
+
 class Comment {
   constructor(quill, options) {
     this.quill = quill;
@@ -39,6 +43,7 @@ class Comment {
     Quill.register(CommentAttr, true);
     Quill.register(CommentAuthorAttr, true);
     Quill.register(CommentTimestampAttr, true);
+    Quill.register(CommentAddOnAttr, true);
 		
     this.addCommentStyle(this.options.color);
 
@@ -84,7 +89,11 @@ class Comment {
           // UNIX epoch like 1234567890
           quill.formatText(range.index, range.length, 'commentTimestamp', utcSeconds, 'user');
           quill.formatText(range.index, range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds, 'user');
-        })
+        });
+
+        if (this.options.commentAddOn) {
+          quill.formatText(range.index, range.length, 'commentAddOn', this.options.commentAddOn, 'user');
+        }
         
       })
     } else {
@@ -133,6 +142,7 @@ Comment.DEFAULTS = {
   commentAddClick: null,
   commentsClick: null,
   commentTimestamp: null,
+  commentAddOn: null, // additional info
 };
 
 Quill.register('modules/comment', Comment);
