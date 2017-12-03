@@ -25,17 +25,22 @@ let CommentAddOnAttr = new Parchment.Attributor.Attribute('commentAddOn', 'ql-co
   scope: Parchment.Scope.INLINE
 });
 
+let quill;
+let options;
+let range;
+
 class Comment {
-  constructor(quill, options) {
-    this.quill = quill;
-    this.options = options;
+  constructor(ql, opt) {
+    quill = ql;
+    options = opt;
+
     this.isEnabled;
 	
-    if(this.options.enabled) {
+    if(options.enabled) {
       this.enable();
 	    this.isEnabled = true;
     }
-    if(!this.options.commentAuthorId) {
+    if(!options.commentAuthorId) {
       return;
     }
 
@@ -45,14 +50,14 @@ class Comment {
     Quill.register(CommentTimestampAttr, true);
     Quill.register(CommentAddOnAttr, true);
 		
-    this.addCommentStyle(this.options.color);
+    this.addCommentStyle(options.color);
 
-    let commentAddClick = this.options.commentAddClick;
-    let commentsClick = this.options.commentsClick;
+    let commentAddClick = options.commentAddClick;
+    let commentsClick = options.commentsClick;
     let addComment = this.addComment;
 
   	// for comment color on/off toolbar item
-  	let toolbar = this.quill.getModule('toolbar');
+  	let toolbar = quill.getModule('toolbar');
     if(toolbar) {
     	toolbar.addHandler('comments-toggle', function() {
 
@@ -75,25 +80,13 @@ class Comment {
       let addCommentBtn = document.querySelector('button.ql-comments-add');
       addCommentBtn.addEventListener('click', () => {
 
-        window.range = quill.getSelection(); // @TODO: currently using global
+        range = quill.getSelection(); 
 
         if (!range || range.length ==0) {
           return; // do nth, cuz nothing is selected
         }
 
         commentAddClick(addComment);
-
-        quill.formatText(range.index, range.length, 'commentAuthor', this.options.commentAuthorId, 'user');
-        
-        this.options.commentTimestamp().then(utcSeconds => {
-          // UNIX epoch like 1234567890
-          quill.formatText(range.index, range.length, 'commentTimestamp', utcSeconds, 'user');
-          quill.formatText(range.index, range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds, 'user');
-        });
-
-        if (this.options.commentAddOn) {
-          quill.formatText(range.index, range.length, 'commentAddOn', this.options.commentAddOn, 'user');
-        }
         
       })
     } else {
@@ -102,12 +95,29 @@ class Comment {
   }
 
   addComment(comment) {
-    // selection could be removed when this callback gets called, so store as global range
-    quill.formatText(range.index, range.length, 'comment', comment, 'user');
+
+    if (!comment) {
+      return; // cannot work without comment 
+    }
+
+    // selection could be removed when this callback gets called, so store it first
+    quill.formatText(range.index, range.length, 'commentAuthor', options.commentAuthorId, 'user');
+
+    if (options.commentAddOn) {
+      quill.formatText(range.index, range.length, 'commentAddOn', options.commentAddOn, 'user');
+    }
+    
+    options.commentTimestamp().then(utcSeconds => {
+      // UNIX epoch like 1234567890
+      quill.formatText(range.index, range.length, 'commentTimestamp', utcSeconds, 'user');
+      quill.formatText(range.index, range.length, 'commentId', 'ql-comment-'+options.commentAuthorId+'-'+utcSeconds, 'user');
+
+      quill.formatText(range.index, range.length, 'comment', comment, 'user');
+    });
   }
 
   enable(enabled = true) {
-    this.quill.root.classList.toggle('ql-comments', enabled);
+    quill.root.classList.toggle('ql-comments', enabled);
 	  this.isEnabled = enabled;
   }
 
@@ -126,7 +136,7 @@ class Comment {
       this.styleElement = document.createElement('style');
       this.styleElement.type = 'text/css';
 	    this.styleElement.classList.add('ql-comments-style'); // in case for some manipulation
-	    this.styleElement.classList.add('ql-comments-style-'+this.options.authorId); // in case for some manipulation
+	    this.styleElement.classList.add('ql-comments-style-'+options.authorId); // in case for some manipulation
       document.documentElement.getElementsByTagName('head')[0].appendChild(this.styleElement);
     }
 	
