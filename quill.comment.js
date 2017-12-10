@@ -92,6 +92,22 @@ class Comment {
     } else {
       console.log('Error: quill-comment module needs quill toolbar');
     }
+
+    // to prevent comments from being copied/pasted.
+    quill.clipboard.addMatcher('span[ql-comment]', function(node, delta) {
+
+      delta.ops.forEach(function(op) {
+        op.attributes["comment"] && delete op.attributes["comment"];
+        op.attributes["commentAddOn"] && delete op.attributes["commentAddOn"];
+        op.attributes["commentAuthor"] && delete op.attributes["commentAuthor"];
+        op.attributes["commentId"] && delete op.attributes["commentId"];
+        op.attributes["commentTimestamp"] && delete op.attributes["commentTimestamp"];
+        op.attributes["background"] && delete op.attributes["background"];
+
+      });
+      return delta;
+    });
+
   }
 
   addComment(comment) {
