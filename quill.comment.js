@@ -1,7 +1,6 @@
 /*
 * to be used with browerify, included quill module
 */
-var Quill = require('quill');
 var Parchment = Quill.import('parchment');
 var Delta = require('quill-delta');
 
@@ -130,6 +129,13 @@ class Comment {
 
       quill.formatText(range.index, range.length, 'comment', comment, 'user');
     });
+   if (quill.getText(range.index+range.length-1,1)!=" ") {
+        quill.insertText(range.index+range.length,' ', 'user');
+        quill.removeFormat(range.index+range.length,1,'user');
+      } else {
+        quill.removeFormat(range.index+range.length-1,1,'user');
+      }
+  
   }
 
   enable(enabled = true) {

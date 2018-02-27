@@ -8,13 +8,22 @@
   },
   "author": "Win Min Tun <sawrochelais@gmail.com>",
   "license": "MIT",
-  "keywords": ["quill", "quilljs", "comment", "quill editor"],
+  "keywords": [
+    "quill",
+    "quilljs",
+    "comment",
+    "quill editor"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/winmintun/quill-comment"
   },
   "dependencies": {
     "quill": "^1.1.0",
-	  "quill-delta": "^3.2.0"
+    "quill-delta": "^3.2.0"
+  },
+  "scripts":{
+	"build": "browserify quill.comment.js > quill-comment.js",
+	"debug": "browserify quill.comment.js --debug > quill-comment.debug.js"
   }
 }
