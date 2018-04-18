@@ -1490,7 +1490,7 @@ class Comment {
       toolbar.addHandler('comments-add', function() {
 
       });
-    	let commentToggleBtn = document.querySelector('button.ql-comments-toggle');
+    	let commentToggleBtn =document.querySelector(`#${options.containerID} button.ql-comments-toggle`);
 
     	let commentObj = this;
     	commentToggleBtn.addEventListener('click', function() {
@@ -1502,7 +1502,7 @@ class Comment {
         }
       });
       
-      let addCommentBtn = document.querySelector('button.ql-comments-add');
+      let addCommentBtn =  document.querySelector(`#${options.containerID} button.ql-comments-add`);
       addCommentBtn.addEventListener('click', () => {
 
         range = quill.getSelection(); 
