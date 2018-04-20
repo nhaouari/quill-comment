@@ -83,7 +83,7 @@ class QuillComment {
           return; // do nth, cuz nothing is selected
         }
 
-        commentAddClick(addComment);
+        commentAddClick(addComment,this);
         
       })
     } else {
