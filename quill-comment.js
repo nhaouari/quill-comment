@@ -1452,7 +1452,7 @@ let CommentAddOnAttr = new Parchment.Attributor.Attribute('commentAddOn', 'ql-co
 
 
 
-class Comment {
+class QuillComment {
   constructor(ql, opt) {
     this.quill = ql;
     this.options = opt;
@@ -1594,5 +1594,5 @@ Comment.DEFAULTS = {
   commentAddOn: null, // additional info
 };
 
-module.exports = Comment
+module.exports = QuillComment
 },{"quill-delta":6}]},{},[8]);
