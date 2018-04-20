@@ -4,7 +4,7 @@
   "description": "Comment plugin for Quill editor",
   "main": "quill.comment.js",
   "scripts": {
-    "build": "browserify quill.comment.js > quill-comment.js",
+    "build": "browserify quill.comment.js --standalone QuillComment > quill-comment.js",
     "debug": "browserify quill.comment.js --debug > quill-comment.debug.js"
   },
   "author": "Win Min Tun <sawrochelais@gmail.com>",
