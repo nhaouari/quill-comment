@@ -168,4 +168,4 @@ Comment.DEFAULTS = {
   commentAddOn: null, // additional info
 };
 
-Quill.register('modules/comment', Comment);
+module.exports = Comment
