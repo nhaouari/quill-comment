@@ -4,7 +4,8 @@
   "description": "Comment plugin for Quill editor",
   "main": "quill.comment.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify quill.comment.js > quill-comment.js",
+    "debug": "browserify quill.comment.js --debug > quill-comment.debug.js"
   },
   "author": "Win Min Tun <sawrochelais@gmail.com>",
   "license": "MIT",
@@ -21,9 +22,5 @@
   "dependencies": {
     "quill": "^1.1.0",
     "quill-delta": "^3.2.0"
-  },
-  "scripts":{
-	"build": "browserify quill.comment.js > quill-comment.js",
-	"debug": "browserify quill.comment.js --debug > quill-comment.debug.js"
   }
 }

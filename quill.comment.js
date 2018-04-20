@@ -1,7 +1,7 @@
 /*
-* to be used with browerify, included quill module
+* to be used with browerify, included this.quill module
 */
-var Parchment = Quill.import('parchment');
+var Parchment = this.quill.import('parchment');
 var Delta = require('quill-delta');
 
 let CommentAttr = new Parchment.Attributor.Attribute('comment', 'ql-comment', {
@@ -24,39 +24,36 @@ let CommentAddOnAttr = new Parchment.Attributor.Attribute('commentAddOn', 'ql-co
   scope: Parchment.Scope.INLINE
 });
 
-let quill;
-let options;
-let range;
 
 class Comment {
   constructor(ql, opt) {
-    quill = ql;
-    options = opt;
+    this.quill = ql;
+    this.options = opt;
 
     this.isEnabled;
 	
-    if(options.enabled) {
+    if(this.options.enabled) {
       this.enable();
 	    this.isEnabled = true;
     }
-    if(!options.commentAuthorId) {
+    if(!this.options.commentAuthorId) {
       return;
     }
 
-    Quill.register(CommentId, true);
-    Quill.register(CommentAttr, true);
-    Quill.register(CommentAuthorAttr, true);
-    Quill.register(CommentTimestampAttr, true);
-    Quill.register(CommentAddOnAttr, true);
+    this.quill.register(CommentId, true);
+    this.quill.register(CommentAttr, true);
+    this.quill.register(CommentAuthorAttr, true);
+    this.quill.register(CommentTimestampAttr, true);
+    this.quill.register(CommentAddOnAttr, true);
 		
-    this.addCommentStyle(options.color);
+    this.addCommentStyle(this.options.color);
 
-    let commentAddClick = options.commentAddClick;
-    let commentsClick = options.commentsClick;
+    let commentAddClick = this.options.commentAddClick;
+    let commentsClick = this.options.commentsClick;
     let addComment = this.addComment;
 
   	// for comment color on/off toolbar item
-  	let toolbar = quill.getModule('toolbar');
+  	let toolbar = this.quill.getModule('toolbar');
     if(toolbar) {
     	toolbar.addHandler('comments-toggle', function() {
 
@@ -64,7 +61,7 @@ class Comment {
       toolbar.addHandler('comments-add', function() {
 
       });
-    	let commentToggleBtn =  document.querySelector(`#${options.containerID} button.ql-comments-toggle`);
+    	let commentToggleBtn =  document.querySelector(`#${this.options.containerID} button.ql-comments-toggle`);
 
     	let commentObj = this;
     	commentToggleBtn.addEventListener('click', function() {
@@ -76,12 +73,12 @@ class Comment {
         }
       });
       
-      let addCommentBtn = document.querySelector(`#${options.containerID} button.ql-comments-add`);
+      let addCommentBtn = document.querySelector(`#${this.options.containerID} button.ql-comments-add`);
       addCommentBtn.addEventListener('click', () => {
 
-        range = quill.getSelection(); 
+        this.range = this.quill.getSelection(); 
 
-        if (!range || range.length ==0) {
+        if (!this.range || this.range.length ==0) {
           return; // do nth, cuz nothing is selected
         }
 
@@ -89,11 +86,11 @@ class Comment {
         
       })
     } else {
-      console.log('Error: quill-comment module needs quill toolbar');
+      console.log('Error: this.quill-comment module needs this.quill toolbar');
     }
 
     // to prevent comments from being copied/pasted.
-    quill.clipboard.addMatcher('span[ql-comment]', function(node, delta) {
+    this.quill.clipboard.addMatcher('span[ql-comment]', function(node, delta) {
 
       delta.ops.forEach(function(op) {
         op.attributes["comment"] && delete op.attributes["comment"];
@@ -116,24 +113,23 @@ class Comment {
     }
 
     // selection could be removed when this callback gets called, so store it first
-    quill.formatText(range.index, range.length, 'commentAuthor', options.commentAuthorId, 'user');
+    this.quill.formatText(this.range.index, this.range.length, 'commentAuthor', this.options.commentAuthorId, 'user');
 
-    if (options.commentAddOn) {
-      quill.formatText(range.index, range.length, 'commentAddOn', options.commentAddOn, 'user');
+    if (this.options.commentAddOn) {
+      this.quill.formatText(this.range.index, this.range.length, 'commentAddOn', this.options.commentAddOn, 'user');
     }
     
-    options.commentTimestamp().then(utcSeconds => {
+    this.options.commentTimestamp().then(utcSeconds => {
       // UNIX epoch like 1234567890
-      quill.formatText(range.index, range.length, 'commentTimestamp', utcSeconds, 'user');
-      quill.formatText(range.index, range.length, 'commentId', 'ql-comment-'+options.commentAuthorId+'-'+utcSeconds, 'user');
+      this.quill.formatText(this.range.index, this.range.length, 'commentTimestamp', utcSeconds, 'user');
+      this.quill.formatText(this.range.index, this.range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds, 'user');
 
-      quill.formatText(range.index, range.length, 'comment', comment, 'user');
+      this.quill.formatText(this.range.index, this.range.length, 'comment', comment, 'user');
     });
-      quill.
   }
 
   enable(enabled = true) {
-    quill.root.classList.toggle('ql-comments', enabled);
+    this.quill.root.classList.toggle('ql-comments', enabled);
 	  this.isEnabled = enabled;
   }
 
@@ -152,7 +148,7 @@ class Comment {
       this.styleElement = document.createElement('style');
       this.styleElement.type = 'text/css';
 	    this.styleElement.classList.add('ql-comments-style'); // in case for some manipulation
-	    this.styleElement.classList.add('ql-comments-style-'+options.authorId); // in case for some manipulation
+	    this.styleElement.classList.add('ql-comments-style-'+this.options.authorId); // in case for some manipulation
       document.documentElement.getElementsByTagName('head')[0].appendChild(this.styleElement);
     }
 	
@@ -171,4 +167,4 @@ Comment.DEFAULTS = {
   commentAddOn: null, // additional info
 };
 
-Quill.register('modules/comment', Comment);
+this.quill.register('modules/comment', Comment);
