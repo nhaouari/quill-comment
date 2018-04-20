@@ -1427,7 +1427,7 @@ module.exports = lib;
 /*
 * to be used with browerify, included this.quill module
 */
-var Parchment = this.quill.import('parchment');
+var Parchment = Quill.import('parchment');
 var Delta = require('quill-delta');
 
 let CommentAttr = new Parchment.Attributor.Attribute('comment', 'ql-comment', {
@@ -1451,6 +1451,7 @@ let CommentAddOnAttr = new Parchment.Attributor.Attribute('commentAddOn', 'ql-co
 });
 
 
+
 class Comment {
   constructor(ql, opt) {
     this.quill = ql;
@@ -1466,11 +1467,11 @@ class Comment {
       return;
     }
 
-    this.quill.register(CommentId, true);
-    this.quill.register(CommentAttr, true);
-    this.quill.register(CommentAuthorAttr, true);
-    this.quill.register(CommentTimestampAttr, true);
-    this.quill.register(CommentAddOnAttr, true);
+    Quill.register(CommentId, true);
+    Quill.register(CommentAttr, true);
+    Quill.register(CommentAuthorAttr, true);
+    Quill.register(CommentTimestampAttr, true);
+    Quill.register(CommentAddOnAttr, true);
 		
     this.addCommentStyle(this.options.color);
 
@@ -1593,5 +1594,5 @@ Comment.DEFAULTS = {
   commentAddOn: null, // additional info
 };
 
-this.quill.register('modules/comment', Comment);
+Quill.register('modules/comment', Comment);
 },{"quill-delta":6}]},{},[8]);
