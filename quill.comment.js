@@ -107,27 +107,22 @@ class QuillComment {
 
   }
 
-  addComment(comment) {
+    addComment({comment,currentTimestamp,...rest}) {
+      if (!comment) {
+        return; // cannot work without comment 
+      }
 
-    if (!comment) {
-      return; // cannot work without comment 
+      // selection could be removed when this callback gets called, so store it first
+      this.quill.formatText(this.range.index, this.range.length, 'commentAuthor', this.options.commentAuthorId, 'user');
+
+      if (this.options.commentAddOn) {
+        this.quill.formatText(this.range.index, this.range.length, 'commentAddOn', this.options.commentAddOn, 'user');
+      }
+        this.quill.formatText(this.range.index, this.range.length, 'commentTimestamp', currentTimestamp, 'user');
+        this.quill.formatText(this.range.index, this.range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+currentTimestamp, 'user');
+        this.quill.formatText(this.range.index, this.range.length, 'comment', comment, 'user');
     }
 
-    // selection could be removed when this callback gets called, so store it first
-    this.quill.formatText(this.range.index, this.range.length, 'commentAuthor', this.options.commentAuthorId, 'user');
-
-    if (this.options.commentAddOn) {
-      this.quill.formatText(this.range.index, this.range.length, 'commentAddOn', this.options.commentAddOn, 'user');
-    }
-    
-    this.options.commentTimestamp().then(utcSeconds => {
-      // UNIX epoch like 1234567890
-      this.quill.formatText(this.range.index, this.range.length, 'commentTimestamp', utcSeconds, 'user');
-      this.quill.formatText(this.range.index, this.range.length, 'commentId', 'ql-comment-'+this.options.commentAuthorId+'-'+utcSeconds, 'user');
-
-      this.quill.formatText(this.range.index, this.range.length, 'comment', comment, 'user');
-    });
-  }
 
   enable(enabled = true) {
     this.quill.root.classList.toggle('ql-comments', enabled);
