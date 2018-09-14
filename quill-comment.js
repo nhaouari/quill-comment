@@ -1534,7 +1534,6 @@ class QuillComment {
   }
 
   addComment({comment,currentTimestamp}) {
-    debugger
     console.log("add comment in module",{comment,currentTimestamp})
     if (!comment) {
       return; // cannot work without comment 
